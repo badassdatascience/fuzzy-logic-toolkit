@@ -4,7 +4,7 @@
 int main()
 {
   std::cout << std::endl;
-  std::cout << "This program uses D. E. Williams' yet untitled" << std::endl;
+  std::cout << "This program demonstrates Dan Williams' yet untitled" << std::endl;
   std::cout << "fuzzy logic toolkit." << std::endl;
   std::cout << std::endl;
   std::cout << "It implements the crane example in Constantin von Altrock's book " << std::endl;
@@ -14,14 +14,14 @@ int main()
   std::cout << "Distance sensor reads 12 yards." << std::endl;
   std::cout << "Angle sensor reads 4 degrees." << std::endl;
 
-  // *
-  //   create and name a linguistic domain for distance
-  // *
+  /*
+  create and name a linguistic domain for distance
+  */
   LinguisticDomain* distance_domain = new LinguisticDomain("distance_domain");
 
-  // *
-  // define some linguistic values of this domain
-  // *
+  /*
+  define some linguistic values and membership functions for the distance domain
+  */
 
   // too_far
   StandardMBF_Z* distance_domain_too_far_membership = new StandardMBF_Z(-5, 0);
@@ -43,20 +43,23 @@ int main()
   StandardMBF_S* distance_domain_far_membership = new StandardMBF_S(10, 30);
   LinguisticSet* distance_domain_far = new LinguisticSet(distance_domain_far_membership, "far");
 
+  /*
+  Add the linguistic values to the distance domain
+  */
   distance_domain->addLinguisticSet(distance_domain_too_far);
   distance_domain->addLinguisticSet(distance_domain_zero);
   distance_domain->addLinguisticSet(distance_domain_close);
   distance_domain->addLinguisticSet(distance_domain_medium);
   distance_domain->addLinguisticSet(distance_domain_far);
 
-  // *
-  //   create and name a linguistic domain for angle
-  // *
+  /*
+  create and name a linguistic domain for angle
+  */
   LinguisticDomain* angle_domain = new LinguisticDomain("angle_domain");
 
-  // *
-  // define some linguistic values of this domain
-  // *
+  /*
+  define some linguistic values and membership functions for the angle domain
+  */
 
   // neg_big
   StandardMBF_Z* angle_domain_neg_big_membership = new StandardMBF_Z(-45, -5);
@@ -78,20 +81,23 @@ int main()
   StandardMBF_S* angle_domain_pos_big_membership = new StandardMBF_S(5, 45);
   LinguisticSet* angle_domain_pos_big = new LinguisticSet(angle_domain_pos_big_membership, "pos_big");
 
+  /*
+    Add the linguistic values to the angle domain
+  */
   angle_domain->addLinguisticSet(angle_domain_neg_big);
   angle_domain->addLinguisticSet(angle_domain_neg_small);
   angle_domain->addLinguisticSet(angle_domain_zero);
   angle_domain->addLinguisticSet(angle_domain_pos_small);
   angle_domain->addLinguisticSet(angle_domain_pos_big);
 
-  // *
-  //   create and name a linguistic domain for power
-  // *
+  /*
+  create and name a linguistic domain for power
+  */
   LinguisticDomain* power_domain = new LinguisticDomain("power_domain");
 
-  // *
-  // define some linguistic values of this domain
-  // *
+  /*
+  define some linguistic values and membership functions for the power domain
+  */
 
   // neg_high
   StandardMBF_Lambda* power_domain_neg_high_membership = new StandardMBF_Lambda(-30, -25, -8);
@@ -113,38 +119,38 @@ int main()
   StandardMBF_Lambda* power_domain_pos_high_membership = new StandardMBF_Lambda(8, 25, 20);
   LinguisticSet* power_domain_pos_high = new LinguisticSet(power_domain_pos_high_membership, "pos");
 
+  /*
+  add the linguistic values to the power domain
+  */
   power_domain->addLinguisticSet(power_domain_neg_high);
   power_domain->addLinguisticSet(power_domain_neg_medium);
   power_domain->addLinguisticSet(power_domain_zero);
   power_domain->addLinguisticSet(power_domain_pos_medium);
   power_domain->addLinguisticSet(power_domain_pos_high);
 
-  // * 
-  // "Fuzzify" sensor readings
-  // *
+  /* 
+  "Fuzzify" sensor readings
+  */
   FuzzyValue* distance = new FuzzyValue(distance_domain);
   distance->setCrispValue(12);
   FuzzyValue* angle = new FuzzyValue(angle_domain);
   angle->setCrispValue(4);
 
-  // *
-  // Create a fuzzy variable to store power inference calculations
-  // *
+  /*
+  Create a fuzzy variable to store power inference calculations
+  */
   FuzzyValue* power = new FuzzyValue(power_domain);
 
-  // *
-  // Fuzzy Inference using if-then rules
-  // *
-  //  std::cout << distance->AND("medium", angle, "pos_small") << std::endl;
-  //  std::cout << distance->AND("medium", angle, "zero") << std::endl;
-  //  std::cout << distance->AND("far", angle, "zero") << std::endl;
+  /*
+  Fuzzy inference of power value
+  */
   power->OR_setSetMembership( distance->AND("medium", angle, "pos_small"), "pos_medium" );
   power->OR_setSetMembership( distance->AND("medium", angle, "zero"), "zero" );
   power->OR_setSetMembership( distance->AND("far", angle, "zero"), "pos_medium" );
 
-  // * 
-  // "Defuzzify" infered power value
-  // *
+  /* 
+  "Defuzzify" infered power value
+  */
   long double power_setting;
   power_setting = power->getCrispValue();
   std::cout << "Set power to " << power_setting << " kW." << std::endl;
