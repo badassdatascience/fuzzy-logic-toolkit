@@ -36,10 +36,10 @@ FuzzyValue::FuzzyValue(LinguisticDomain* ld)
 void FuzzyValue::setCrispValue(long double x)
 {
   int i;
-  std::vector<long double> temp = linguistic_domain->getMembership(x);
+  std::vector<long double> membership_vector = linguistic_domain->getMembership(x);
   for (i=0; i<linguistic_domain->getNumberOfLinguisticSets(); i++)
     {
-      values[i] = temp[i];
+      values[i] = membership_vector[i];
     }
 }
 
@@ -49,16 +49,16 @@ long double FuzzyValue::getCrispValue()
   // center-of-maximum method
 
   int i;
-  std::vector<long double> temp;
+  std::vector<long double> typical_value_vector;
   for (i=0; i<linguistic_domain->getNumberOfLinguisticSets(); i++)
     {
-      temp.push_back( linguistic_domain->getLinguisticSetList()[i]->getMembershipFunction()->getTypicalValue());
+      typical_value_vector.push_back( linguistic_domain->getLinguisticSetList()[i]->getMembershipFunction()->getTypicalValue());
     }
 
   long double answer = 0;
   for (i=0; i<linguistic_domain->getNumberOfLinguisticSets(); i++)
     {
-      answer = answer + temp[i] * values[i];
+      answer = answer + typical_value_vector[i] * values[i];
     }
   return answer;
 }
