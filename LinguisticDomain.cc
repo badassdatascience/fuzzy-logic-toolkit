@@ -34,12 +34,12 @@ void LinguisticDomain::addLinguisticSet(LinguisticSet* l)
 
 std::vector<long double> LinguisticDomain::getMembership(long double x)
 {
-  std::vector<long double> temp;
+  std::vector<long double> membership_vector;
   for (int i = 0; i < linguistic_set_list.size(); i++)
     {
-     temp.push_back(linguistic_set_list[i]->getMembershipFunction()->getMembership(x));
+     membership_vector.push_back(linguistic_set_list[i]->getMembershipFunction()->getMembership(x));
     }
-  return temp;
+  return membership_vector;
 }
 
 long double LinguisticDomain::getMembership(long double x, std::string s)
