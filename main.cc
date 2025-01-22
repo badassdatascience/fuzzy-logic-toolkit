@@ -4,7 +4,7 @@
 int main()
 {
   std::cout << std::endl;
-  std::cout << "This program demonstrates Dan Williams' yet untitled" << std::endl;
+  std::cout << "This program demonstrates Emily Williams' yet untitled" << std::endl;
   std::cout << "fuzzy logic toolkit." << std::endl;
   std::cout << std::endl;
   std::cout << "It implements the crane example in Constantin von Altrock's book " << std::endl;
