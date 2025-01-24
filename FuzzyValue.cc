@@ -20,6 +20,8 @@
 
 */
 
+#include <iostream>
+
 #include "FuzzyValue.hh"
 
 FuzzyValue::FuzzyValue(LinguisticDomain* ld)
@@ -86,14 +88,19 @@ void FuzzyValue::setSetMembership(long double x, std::string nm)
 
 long double FuzzyValue::getSetMembership(std::string nm)
 {
-  int i;
-  for (i=0; i<linguistic_domain->getNumberOfLinguisticSets(); i++)
-    {
-      if (linguistic_domain->getLinguisticSetList()[i]->getName() == nm)
-	{
-	  return values[i];
-	}
-    }
+  try {
+    int length = linguistic_domain->getNumberOfLinguisticSets();
+    int i;
+    for (i=0; i < length; i++)
+      {
+	if (linguistic_domain->getLinguisticSetList()[i]->getName() == nm)
+	  {
+	    return values[i];
+	  }
+      }
+  } catch (const std::exception& e) {
+    std::cerr << "Error getting set membership:  " << e.what() << std::endl;
+  }
 }
 
 long double FuzzyValue::AND(std::string sa, FuzzyValue* fv, std::string sb)
