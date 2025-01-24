@@ -48,10 +48,7 @@ long double StandardMBF_Z::getMembership(long double x)
     {
       return slope * x + y_intercept;
     }
-  if (x >= max)
-    {
-      return 0;
-    }
+  return 0;
 }
  
 StandardMBF_S::StandardMBF_S(long double mn, long double mx)
@@ -73,10 +70,7 @@ long double StandardMBF_S::getMembership(long double x)
     {
       return slope * x + y_intercept;
     }
-  if (x >= max)
-    {
-      return 1;
-    }
+  return 1;
 }
 
 StandardMBF_Lambda::StandardMBF_Lambda(long double mn, long double md, long double mx)
@@ -105,10 +99,7 @@ long double StandardMBF_Lambda::getMembership(long double x)
     {
       return slope_down * x + y_intercept_down;
     }
-  if (x >= max)
-    {
-      return 0;
-    }
+  return 0;
 }
 
 StandardMBF_Pi::StandardMBF_Pi(long double mn, long double lmd, long double hmd, long double mx)
@@ -138,13 +129,9 @@ long double StandardMBF_Pi::getMembership(long double x)
     {
       return 1;
     }
-
   if ( (x >= higher_mid) && (x <= max) )
     {
       return slope_down * x + y_intercept_down;
     }
-  if (x >= max)
-    {
-      return 0;
-    }
+  return 0;
 }
